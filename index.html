@@ -1,0 +1,311 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .site { background: #fafaf9; min-height: 600px; color: #1a1a1a; font-family: sans-serif; }
+  .nav { background: #fff; border-bottom: 1px solid #e8e0e4; display: flex; align-items: center; padding: 0 1.75rem; height: 62px; gap: 0.25rem; }
+  .nav-brand { font-weight: 700; font-size: 1rem; margin-right: auto; color: #1a1a1a; white-space: nowrap; }
+  .nav-link { background: none; border: none; cursor: pointer; font-size: 0.83rem; color: #555; padding: 7px 14px; border-radius: 20px; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+  .nav-link:hover { background: #fdf0f4; color: #1a1a1a; }
+  .nav-link.active { background: #c2185b; color: #fff; }
+  .page { padding: 2.75rem 2.5rem 4rem; max-width: 920px; margin: 0 auto; display: none; }
+  .page.active { display: block; }
+  .page-title { font-size: 1.75rem; font-weight: 500; margin-bottom: 0.4rem; color: #1a1a1a; }
+  .page-sub { font-size: 0.92rem; color: #777; margin-bottom: 1.75rem; }
+  .card { background: #fff; border-radius: 14px; border: 1px solid #ede6e9; padding: 1.75rem; margin-bottom: 1rem; }
+  .btn { display: inline-block; background: #c2185b; border: none; padding: 10px 22px; border-radius: 8px; font-size: 0.88rem; cursor: pointer; color: #fff; text-decoration: none; }
+  .btn-outline { background: #fff; color: #c2185b; border: 1px solid #c2185b; }
+
+  .home-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; align-items: start; }
+  .img-ph { width: 100%; background: #f5edf0; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #b07080; font-size: 0.78rem; text-align: center; padding: 1rem; border: 1px dashed #ddc8cf; }
+  .img-ph-sm { width: 100%; aspect-ratio: 4/3; background: #f9f2f4; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #b07080; font-size: 0.72rem; text-align: center; padding: 0.5rem; border: 1px dashed #ddc8cf; }
+  .about-card { background: #fff; border-radius: 16px; border: 1px solid #ede6e9; padding: 1.75rem; }
+  .about-card h2 { font-size: 1.2rem; font-weight: 500; margin-bottom: 1rem; color: #1a1a1a; }
+  .about-card p { font-size: 0.9rem; line-height: 1.8; color: #444; margin-bottom: 0.8rem; }
+
+  .section-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: #c2185b; margin-bottom: 0.75rem; margin-top: 1.5rem; border-bottom: 1px solid #f5edf0; padding-bottom: 0.4rem; }
+  .exp-item { margin-bottom: 1.25rem; }
+  .exp-title { font-size: 0.95rem; font-weight: 500; color: #1a1a1a; }
+  .exp-meta { font-size: 0.8rem; color: #888; margin: 2px 0 6px; }
+  .exp-bullets { font-size: 0.83rem; line-height: 1.72; color: #444; padding-left: 1rem; }
+  .exp-bullets li { margin-bottom: 3px; }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.4rem; }
+  .skill-tag { background: #fdf0f4; color: #a01548; border: 1px solid #f0d4de; font-size: 0.78rem; padding: 4px 11px; border-radius: 20px; }
+  .course-pill { background: #f7f7f6; border: 1px solid #e4dde0; color: #444; font-size: 0.78rem; padding: 3px 10px; border-radius: 20px; }
+  .cert-item { font-size: 0.85rem; color: #444; padding: 0.5rem 0; border-bottom: 1px solid #f5edf0; }
+  .cert-item:last-child { border-bottom: none; }
+
+  .accordion { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #ede6e9; }
+  .acc-item { border-bottom: 1px solid #ede6e9; }
+  .acc-item:last-child { border-bottom: none; }
+  .acc-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; cursor: pointer; font-size: 0.92rem; background: none; border: none; width: 100%; text-align: left; color: #1a1a1a; }
+  .acc-header:hover { background: #fdf7f8; }
+  .acc-body { padding: 1.25rem; font-size: 0.88rem; line-height: 1.72; color: #444; border-top: 1px solid #ede6e9; }
+  .acc-body-inner { display: grid; grid-template-columns: 160px 1fr; gap: 1.25rem; align-items: start; }
+  .tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 0.6rem; }
+  .tag { background: #fdf0f4; color: #a01548; border: 1px solid #f0d4de; font-size: 0.75rem; padding: 2px 9px; border-radius: 20px; }
+  .proj-link { display: inline-flex; align-items: center; gap: 4px; color: #c2185b; font-size: 0.82rem; margin-top: 0.6rem; text-decoration: none; border-bottom: 1px solid #f0d4de; }
+  .chevron { transition: transform 0.2s; display: inline-block; color: #aaa; }
+  .chevron.open { transform: rotate(180deg); }
+
+  .hobbies-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .hobby-card { background: #fff; border-radius: 12px; border: 1px solid #ede6e9; overflow: hidden; }
+  .hobby-body { padding: 0.85rem; }
+  .hobby-body h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.35rem; color: #1a1a1a; }
+  .hobby-body p { font-size: 0.8rem; line-height: 1.6; color: #666; }
+
+  .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .social-card { background: #fff; border-radius: 12px; border: 1px solid #ede6e9; padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; }
+  .social-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .social-card h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; color: #1a1a1a; }
+  .social-card p { font-size: 0.82rem; color: #666; line-height: 1.6; margin-bottom: 0.5rem; }
+  .social-card a { font-size: 0.8rem; color: #c2185b; text-decoration: none; border-bottom: 1px solid #f0d4de; }
+
+  .resume-name { font-size: 1.4rem; font-weight: 500; color: #1a1a1a; }
+  .resume-contact { font-size: 0.82rem; color: #777; line-height: 1.8; margin-top: 0.3rem; }
+
+  @media (max-width: 580px) {
+    .home-layout, .social-grid, .acc-body-inner { grid-template-columns: 1fr; }
+    .hobbies-grid { grid-template-columns: repeat(2, 1fr); }
+    .page { padding: 1.5rem 1rem 2.5rem; }
+  }
+</style>
+
+<div class="site">
+  <nav class="nav">
+    <span class="nav-brand">Maya's Website</span>
+    <button class="nav-link active" onclick="showPage('about',this)">About Me</button>
+    <button class="nav-link" onclick="showPage('resume',this)">Resume</button>
+    <button class="nav-link" onclick="showPage('interests',this)">Interests</button>
+    <button class="nav-link" onclick="showPage('projects',this)">Projects</button>
+    <button class="nav-link" onclick="showPage('social',this)">Social</button>
+  </nav>
+
+  <!-- ABOUT -->
+  <div id="page-about" class="page active">
+    <div class="home-layout">
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="img-ph" style="aspect-ratio:3/4;min-height:220px;">[ Your main photo ]</div>
+        <div class="img-ph" style="aspect-ratio:4/3;">[ Second photo ]</div>
+      </div>
+      <div class="about-card">
+        <h2>About Me</h2>
+        <p>Hi! My name is Maya Hernandez. I'm a 4th year Computer Science student at CU Boulder with a passion for design, coding, and creating impactful projects. I enjoy working on web development, learning new technologies, and bringing creative ideas to life.</p>
+        <p>Growing up, I was always drawn to both the creative and analytical sides of problem-solving. Computer science turned out to be the perfect intersection of those two interests. At CU Boulder, I've had the chance to explore everything from front-end web development to data-driven research, and each project has pushed me to grow in new ways.</p>
+        <p>Outside of my coursework, I'm an active member of Tri-Delta and the Society of Women Engineers, and I love being involved in campus life. Whether I'm skiing in the Rockies, cheering on the Buffs at a football game, or planning my next trip, I try to bring the same curiosity and energy that I bring to my work.</p>
+        <p>I'm currently looking ahead to opportunities in software engineering and UX-focused development, especially in roles where I can combine technical skills with thoughtful, human-centered design. I believe the best technology doesn't just work well — it connects with the people using it.</p>
+        <p>If you'd like to learn more about my work, explore my projects page or reach out on LinkedIn. I'm always happy to connect!</p>
+        <a class="btn" href="#" style="margin-top:0.5rem;">View My Resume</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME -->
+  <div id="page-resume" class="page">
+    <h1 class="page-title">Resume / CV</h1>
+    <div class="card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem;">
+        <div>
+          <div class="resume-name">Maya V. Hernandez-Diaz</div>
+          <div class="resume-contact">mayahernandez.fl@gmail.com &nbsp;·&nbsp; 858-668-8252 &nbsp;·&nbsp; Boulder, CO</div>
+        </div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+          <a class="btn" href="#">View PDF</a>
+          <a class="btn btn-outline" href="#">Download</a>
+        </div>
+      </div>
+
+      <div class="section-label">Education</div>
+      <div class="exp-item">
+        <div class="exp-title">University of Colorado Boulder — College of Engineering &amp; Applied Science</div>
+        <div class="exp-meta">Bachelor of Arts, Computer Science &nbsp;·&nbsp; Aug 2022 – May 2027 &nbsp;·&nbsp; Junior</div>
+        <div style="font-size:0.83rem;color:#666;margin-top:4px;">Activities: Society of Women Engineers (2022–2024), Delta Delta Delta (2023–2026)</div>
+        <div class="section-label" style="margin-top:1rem;">Relevant Coursework</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="course-pill">Data Structures (CSCI 2270)</span>
+          <span class="course-pill">Computer Systems (CSCI 2400)</span>
+          <span class="course-pill">Fundamentals of HCI (CSCI 3002)</span>
+          <span class="course-pill">Database Systems (CSCI 3287)</span>
+          <span class="course-pill">Software Dev Methods &amp; Tools (CSCI 3308)</span>
+          <span class="course-pill">Calculus 2</span>
+          <span class="course-pill">Microeconomics</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-title">McNeil High School — Austin, TX</div>
+        <div class="exp-meta">High School Diploma &nbsp;·&nbsp; GPA: 4.14</div>
+      </div>
+
+      <div class="section-label">Technical Skills</div>
+      <div style="font-size:0.82rem;color:#888;margin-bottom:0.35rem;">Programming Languages</div>
+      <div class="skills-grid"><span class="skill-tag">C++</span><span class="skill-tag">Python</span><span class="skill-tag">SQL</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span></div>
+      <div style="font-size:0.82rem;color:#888;margin:0.75rem 0 0.35rem;">Tools &amp; Frameworks</div>
+      <div class="skills-grid"><span class="skill-tag">Git / GitHub</span><span class="skill-tag">MySQL Workbench</span><span class="skill-tag">Bootstrap</span><span class="skill-tag">CLion</span><span class="skill-tag">VS Code</span><span class="skill-tag">Figma</span></div>
+      <div style="font-size:0.82rem;color:#888;margin:0.75rem 0 0.35rem;">Concepts &amp; Design</div>
+      <div class="skills-grid"><span class="skill-tag">Data Structures</span><span class="skill-tag">Algorithms</span><span class="skill-tag">Database Design</span><span class="skill-tag">Web Development</span><span class="skill-tag">UX Design</span><span class="skill-tag">Software Testing</span><span class="skill-tag">Human-Centered Design</span></div>
+
+      <div class="section-label">Experience</div>
+      <div class="exp-item">
+        <div class="exp-title">Campus Lead — Hoppy</div>
+        <div class="exp-meta">Part-time &nbsp;·&nbsp; Aug 2024 – May 2025 &nbsp;·&nbsp; Boulder, CO (Hybrid)</div>
+        <ul class="exp-bullets">
+          <li>Led a team to promote a startup mobile app and drive user growth on campus.</li>
+          <li>Organized and executed events to increase app downloads and user engagement.</li>
+          <li>Applied event planning and team leadership skills in a fast-paced startup environment.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-title">Receptionist — Bliss Nail Bar of Austin</div>
+        <div class="exp-meta">Part-time &nbsp;·&nbsp; Oct 2020 – Aug 2022 &nbsp;·&nbsp; Austin, TX (On-site)</div>
+        <ul class="exp-bullets">
+          <li>Coordinated appointment scheduling and client communications to optimize service flow.</li>
+          <li>Delivered high-quality customer service by greeting, assisting, and managing client needs.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-title">Water Safety Attendant / Lifeguard — Typhoon Texas</div>
+        <div class="exp-meta">Jun 2020 – Present</div>
+        <ul class="exp-bullets">
+          <li>Supervised guests and responded to emergencies to ensure a safe environment.</li>
+          <li>Maintained cleanliness and safety standards across assigned areas.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-title">Babysitter — Private Family (Graves)</div>
+        <div class="exp-meta">Aug 2019 – Aug 2022</div>
+        <ul class="exp-bullets"><li>Provided consistent childcare including meal prep, activities, and learning routines.</li></ul>
+      </div>
+
+      <div class="section-label">Leadership &amp; Involvement</div>
+      <div class="skills-grid" style="margin-top:0.25rem;">
+        <span class="skill-tag">Tri-Delta Sorority (2023–Present)</span>
+        <span class="skill-tag">Society of Women Engineers (2023–Present)</span>
+        <span class="skill-tag">HS &amp; Club Volleyball (2018–2020)</span>
+      </div>
+
+      <div class="section-label">Certifications</div>
+      <div class="cert-item">Lifeguard &amp; First Aid / CPR Certification — July 2020</div>
+    </div>
+  </div>
+
+  <!-- INTERESTS -->
+  <div id="page-interests" class="page">
+    <h1 class="page-title">Interests &amp; Extracurriculars</h1>
+    <p class="page-sub">A few things I love outside of the classroom.</p>
+    <div class="hobbies-grid">
+      <div class="hobby-card">
+        <div class="img-ph-sm">[ Skiing photo ]</div>
+        <div class="hobby-body"><h3>Skiing</h3><p>Since going to school in Boulder, skiing has become one of my favorite ways to stay active during the winters. The Rockies make for an incredible backyard!</p></div>
+      </div>
+      <div class="hobby-card">
+        <div class="img-ph-sm">[ Football photo ]</div>
+        <div class="hobby-body"><h3>CU Football</h3><p>Thanks to Coach Prime, CU games have become an amazing experience. Watching the Buffs compete is one of my favorite fall traditions.</p></div>
+      </div>
+      <div class="hobby-card">
+        <div class="img-ph-sm">[ Sorority photo ]</div>
+        <div class="hobby-body"><h3>Tri-Delta</h3><p>I'm a proud member of Delta Delta Delta at CU Boulder — it's given me lifelong friendships, leadership opportunities, and a strong sense of community.</p></div>
+      </div>
+      <div class="hobby-card">
+        <div class="img-ph-sm">[ Travel photo ]</div>
+        <div class="hobby-body"><h3>Traveling</h3><p>Traveling to new places is my absolute favorite thing in the world. Most recently I visited New York City — always looking for the next adventure.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div id="page-projects" class="page">
+    <h1 class="page-title">Projects &amp; Work</h1>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAcc(this)">Go Green Mobile App <span class="chevron">&#8964;</span></button>
+        <div class="acc-body" style="display:none;">
+          <div class="acc-body-inner">
+            <div class="img-ph-sm">[ App screenshot ]</div>
+            <div>
+              <p>A mobile application designed to help users make more eco-conscious daily decisions. Tracks sustainability habits and provides personalized tips for reducing your carbon footprint. Built collaboratively with a strong focus on intuitive UX and real-world impact.</p>
+              <div class="tags"><span class="tag">Mobile Dev</span><span class="tag">UX Design</span><span class="tag">Sustainability</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAcc(this)">Are We Alone? — Astrobiology Web Article <span class="chevron">&#8964;</span></button>
+        <div class="acc-body" style="display:none;">
+          <div class="acc-body-inner">
+            <div class="img-ph-sm">[ Site screenshot ]</div>
+            <div>
+              <p>An interactive, scroll-based web article exploring the science of life in the universe, created for ASTR 2040. Covers the definition of life, habitability, the Drake Equation, candidate worlds, and the Fermi Paradox. Designed and built entirely from scratch with a focus on clean typography and accessible science writing.</p>
+              <div class="tags"><span class="tag">HTML / CSS</span><span class="tag">Science Communication</span><span class="tag">Web Design</span><span class="tag">ASTR 2040</span></div>
+              <a class="proj-link" href="https://mmayahernandez.github.io/are-we-alone/" target="_blank">View live site ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header" onclick="toggleAcc(this)">Journaling Web App — Group Project <span class="chevron">&#8964;</span></button>
+        <div class="acc-body" style="display:none;">
+          <div class="acc-body-inner">
+            <div class="img-ph-sm">[ App screenshot ]</div>
+            <div>
+              <p>A collaborative group project (CSCI 3308) where our team designed and built a full-featured journaling web app. Users can create, edit, and organize journal entries through a clean interface. I contributed to front-end design and feature development, gaining experience with Git workflows and collaborative product development.</p>
+              <div class="tags"><span class="tag">Group Project</span><span class="tag">CSCI 3308</span><span class="tag">Web Development</span><span class="tag">Git</span><span class="tag">Full Stack</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div id="page-social" class="page">
+    <h1 class="page-title">Social Media &amp; Professional Presence</h1>
+    <p class="page-sub">Here's where you can find me online and stay connected.</p>
+    <div class="social-grid">
+      <div class="social-card">
+        <div class="social-icon" style="background:#e8f4ff;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0077b5"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div>
+          <h3>LinkedIn</h3>
+          <p>My professional profile — career updates, experience, and the best place to reach me for opportunities.</p>
+          <a href="https://www.linkedin.com/in/mmayahernandez" target="_blank">linkedin.com/in/mmayahernandez ↗</a>
+        </div>
+      </div>
+      <div class="social-card">
+        <div class="social-icon" style="background:#f5f5f5;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#24292e"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </div>
+        <div>
+          <h3>GitHub</h3>
+          <p>My code lives here — projects, coursework, and experiments. See my technical work in action.</p>
+          <a href="https://github.com/mmayahernandez" target="_blank">github.com/mmayahernandez ↗</a>
+        </div>
+      </div>
+      <div class="social-card" style="grid-column:1/-1;max-width:440px;">
+        <div class="social-icon" style="background:#fdf0f4;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c2185b" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div>
+          <h3>Instagram</h3>
+          <p>A more personal look at my life — travels, CU experiences, and everyday moments. Feel free to follow along!</p>
+          <a href="#" target="_blank">[ Add your Instagram handle ] ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const chevron = btn.querySelector('.chevron');
+  const isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (chevron) chevron.classList.toggle('open', !isOpen);
+}
+</script>
